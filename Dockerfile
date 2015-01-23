@@ -68,4 +68,9 @@ ADD ./config/nginx/microcache_fcgi_auth.conf /etc/nginx/microcache_fcgi_auth.con
 ADD ./config/nginx/mime.types /etc/nginx/mime.types
 ADD ./config/nginx/nginx.conf /etc/nginx/nginx.conf
 ADD ./config/nginx/upstream_phpcgi_unix.conf /etc/nginx/upstream_phpcgi_unix.conf
+ADD ./config/nginx/map_https_fcgi.conf /etc/nginx/map_https_fcgi.conf
+ADD ./config/nginx/map_block_http_methods.conf /etc/nginx/map_block_http_methods.conf
+ADD ./config/nginx/php_fpm_status_allowed_hosts.conf /etc/nginx/php_fpm_status_allowed_hosts.conf
+ADD ./config/nginx/nginx_status_allowed_hosts.conf /etc/nginx/nginx_status_allowed_hosts.conf
+ADD ./config/nginx/map_https_forwarded_proto.conf /etc/nginx/map_https_forwarded_proto.conf
 ADD ./config/nginx/default /etc/nginx/sites-enabled/default
