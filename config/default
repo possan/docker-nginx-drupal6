@@ -18,11 +18,11 @@ server {
   if ($bad_referer) {
       return 444;
   }
-
+  
   ## Filesystem root of the site and index.
   root /var/www;
   index index.php;
   fastcgi_keep_conn on; # keep alive to the FCGI upstream
   include drupal6.conf;
-  include drupal6_upload_progress.conf;
+  # include drupal6_upload_progress.conf;
 }

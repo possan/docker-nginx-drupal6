@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:12.04
 
 MAINTAINER Luis Elizondo "lelizondo@gmail.com"
 ENV DEBIAN_FRONTEND noninteractive
@@ -9,16 +9,14 @@ ENV LANG       en_US.UTF-8
 ENV LC_ALL     en_US.UTF-8
 
 # Update system
-RUN apt-get update && apt-get dist-upgrade -y
+RUN apt-get update
 
 # Basic packages
-RUN apt-get -y install php5-fpm php5-mysql php-apc php5-imagick php5-imap php5-mcrypt php5-curl php5-cli php5-gd php5-pgsql php5-sqlite php5-common php-pear curl php5-json php5-redis php5-memcache
+RUN apt-get -y install php5 php5-fpm php5-mysql php-apc php5-imagick php5-imap php5-mcrypt php5-curl php5-cli php5-gd php5-pgsql php5-sqlite php5-common php-pear curl php5-json php5-memcache
 RUN apt-get -y install nginx-extras
 RUN apt-get -y install git curl supervisor
 
 RUN echo '#!/bin/sh\nexit 101' > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/policy-rc.d
-
-RUN php5enmod mcrypt
 
 RUN /usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php
 RUN /bin/mv composer.phar /usr/local/bin/composer
@@ -54,15 +52,6 @@ RUN chmod +x /opt/startup.sh
 #ADD ./config/realip.conf /etc/nginx/conf.d/realip.conf
 ADD ./config/supervisord-nginx.conf /etc/supervisor/conf.d/supervisord-nginx.conf
 RUN mkdir -p /var/cache/nginx/microcache
-ADD ./config/nginx.conf /etc/nginx/nginx.conf
+ADD ./config/default2 /etc/nginx/sites-enabled/default
+ADD ./config/nginx2.conf /etc/nginx/nginx.conf
 ADD ./config/mime.types /etc/nginx/mime.types
-ADD ./config/fastcgi.conf /etc/nginx/fastcgi.conf
-ADD ./config/blacklist.conf /etc/nginx/blacklist.conf
-ADD ./config/fastcgi_microcache_zone.conf /etc/nginx/fastcgi_microcache_zone.conf
-ADD ./config/drupal6.conf /etc/nginx/drupal6.conf
-ADD ./config/fastcgi_drupal.conf /etc/nginx/fastcgi_drupal.conf
-ADD ./config/map_cache.conf /etc/nginx/map_cache.conf
-ADD ./config/microcache_fcgi_auth.conf /etc/nginx/microcache_fcgi_auth.conf
-ADD ./config/fastcgi_no_args_drupal.conf /etc/nginx/fastcgi_no_args_drupal.conf
-ADD ./config/drupal6_upload_progress.conf /etc/nginx/drupal6_upload_progress.conf
-ADD ./config/default /etc/nginx/sites-enabled/default
