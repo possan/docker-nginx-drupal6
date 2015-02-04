@@ -17,7 +17,7 @@ RUN echo '#!/bin/sh\nexit 101' > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/pol
 # Basic packages
 RUN apt-get -y install php5 php5-fpm php5-mysql php-apc php5-imagick php5-imap php5-mcrypt php5-curl php5-cli php5-gd php5-pgsql php5-sqlite php5-common php-pear curl php5-json php5-memcache nginx-extras git curl supervisor
 
-RUN apt-get -y install ssmtp
+RUN apt-get -y install ssmtp rsyslog
 
 # Composer
 RUN /usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php
@@ -54,6 +54,10 @@ ADD ./config/supervisor/supervisord-nginx.conf /etc/supervisor/conf.d/supervisor
 # PHP
 ADD ./config/php/www.conf /etc/php5/fpm/pool.d/www.conf
 ADD ./config/php/php.ini /etc/php5/fpm/php.ini
+
+# Setup cron
+RUN echo "25 * * * * /usr/bin/env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin COLUMNS=72 /root/.composer/vendor/drush/drush/drush --root=/var/www --uri=localhost --quiet cron" >> /tmp/crontab
+RUN crontab /tmp/crontab ; rm /tmp/crontab
 
 # Nginx
 ADD ./config/nginx/blacklist.conf /etc/nginx/blacklist.conf
