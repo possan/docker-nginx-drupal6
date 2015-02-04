@@ -17,7 +17,7 @@ RUN echo '#!/bin/sh\nexit 101' > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/pol
 # Basic packages
 RUN apt-get -y install php5 php5-fpm php5-mysql php-apc php5-imagick php5-imap php5-mcrypt php5-curl php5-cli php5-gd php5-pgsql php5-sqlite php5-common php-pear curl php5-json php5-memcache nginx-extras git curl supervisor
 
-RUN apt-get -y install mailutils
+RUN apt-get -y install ssmtp
 
 # Composer
 RUN /usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php
