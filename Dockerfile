@@ -55,10 +55,6 @@ ADD ./config/supervisor/supervisord-nginx.conf /etc/supervisor/conf.d/supervisor
 ADD ./config/php/www.conf /etc/php5/fpm/pool.d/www.conf
 ADD ./config/php/php.ini /etc/php5/fpm/php.ini
 
-# Setup cron
-RUN echo "25 * * * * /usr/bin/env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin COLUMNS=72 /root/.composer/vendor/drush/drush/drush --root=/var/www --uri=localhost --quiet cron" >> /tmp/crontab
-RUN crontab /tmp/crontab ; rm /tmp/crontab
-
 # Nginx
 ADD ./config/nginx/blacklist.conf /etc/nginx/blacklist.conf
 ADD ./config/nginx/cron_allowed_hosts.conf /etc/nginx/cron_allowed_hosts.conf
